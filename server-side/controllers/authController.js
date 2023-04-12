@@ -73,16 +73,16 @@ module.exports = {
       }
 
       let payload = {
-        id: isEmailExist[0].id_users,
+        id_user: isEmailExist[0].id_user,
       };
 
       const token = jwt.sign(payload, "joe", { expiresIn: "1h" });
-
+      console.log(isEmailExist);
       return res.status(200).send({
         message: "Login Success",
         token,
         data: {
-          id: isEmailExist[0].id_users,
+          id_user: isEmailExist[0].id_user,
           username: isEmailExist[0].username,
           email: isEmailExist[0].email,
           phone: isEmailExist[0].phone,
