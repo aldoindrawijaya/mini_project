@@ -9,7 +9,6 @@ function Register() {
   const navigate = useNavigate();
 
   const registerSchema = Yup.object().shape({
-    name: Yup.string().required("Nama tidak boleh kosong"),
     username: Yup.string().required("Username tidak boleh kosong"),
     email: Yup.string()
       .required("Email tidak boleh kosong")
@@ -17,13 +16,19 @@ function Register() {
     password: Yup.string()
       .required("Password tidak boleh kosong")
       .min(3, "Password terlalu pendek"),
+    phone: Yup.string().required("Phone tidak boleh kosong"),
+    store_name: Yup.string().required("store name tidak boleh kosong"),
   });
 
   const registerUser = async (value) => {
     try {
       setIsLoading(true);
-      let response = await axios.post("http://localhost:8001/auth", value);
+      let response = await axios.post(
+        "http://localhost:8001/auth/register",
+        value
+      );
       alert(response.data.message);
+      navigate("/login");
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -32,7 +37,13 @@ function Register() {
   return (
     <div>
       <Formik
-        initialValues={{ name: "", username: "", email: "", password: "" }}
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+          phone: "",
+          store_name: "",
+        }}
         validationSchema={registerSchema}
         onSubmit={(value) => {
           registerUser(value);
@@ -51,25 +62,6 @@ function Register() {
                   <input type="hidden" name="remember" defaultValue="true" />
                   <div className="-space-y-px rounded-md shadow-sm">
                     <div>
-                      <label htmlFor="Name" className="sr-only">
-                        Name
-                      </label>
-                      <Field
-                        id="name"
-                        name="name"
-                        type="name"
-                        autoComplete="name"
-                        required
-                        className="relative block w-full rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="name"
-                      />
-                      <ErrorMessage
-                        component="div"
-                        name="name"
-                        style={{ color: "red", fontSize: "12px" }}
-                      />
-                    </div>
-                    <div>
                       <label htmlFor="username" className="sr-only">
                         Username
                       </label>
@@ -80,7 +72,7 @@ function Register() {
                         autoComplete="username"
                         required
                         className="relative block w-full rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder="username"
+                        placeholder="Username"
                       />
                       <ErrorMessage
                         component="div"
@@ -104,6 +96,44 @@ function Register() {
                       <ErrorMessage
                         component="div"
                         name="email"
+                        style={{ color: "red", fontSize: "12px" }}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="sr-only">
+                        Phone
+                      </label>
+                      <Field
+                        id="phone"
+                        name="phone"
+                        type="phone"
+                        autoComplete="phone"
+                        required
+                        className="relative block w-full rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="Phone"
+                      />
+                      <ErrorMessage
+                        component="div"
+                        name="phone"
+                        style={{ color: "red", fontSize: "12px" }}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="store_name" className="sr-only">
+                        Store Name
+                      </label>
+                      <Field
+                        id="store_name"
+                        name="store_name"
+                        type="store_name"
+                        autoComplete="store_name"
+                        required
+                        className="relative block w-full rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder="Store Name"
+                      />
+                      <ErrorMessage
+                        component="div"
+                        name="store_name"
                         style={{ color: "red", fontSize: "12px" }}
                       />
                     </div>

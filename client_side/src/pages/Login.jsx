@@ -24,8 +24,8 @@ function Login() {
   };
 
   useEffect(() => {
-    if (userGlobal.id > 0) {
-      navigate("/");
+    if (userGlobal.id_user > 0) {
+      navigate("/landing");
     }
   }, [userGlobal]);
 
